@@ -1,11 +1,17 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 
 //Объект с пропсами имеет тип "CardProps, где прописаны типы"
 
-// Если стоит ? , значит этот атрибут необязательный
+export enum CardVariant {
+    outlined = 'outlined',
+    primary = 'primary'
+}
+
 interface CardProps {
     width:string;
     height?:string;
+    variant: CardVariant;
+    onClick: (num: number) => void;
     children?: React.ReactNode
 }
 
@@ -13,10 +19,19 @@ const Card: FC<CardProps> =
     ({
         width, 
         height, 
+        variant,
+        onClick,
         children
     }) => {  
+    
+    const [state,setState] = useState(0)
     return (
-        <div style={{width,height, border:"1px solid gray"}}>
+        <div style={{width,height, 
+            border: variant === CardVariant.outlined ? "1px solid gray" : "none",
+            background: variant === CardVariant.primary ? 'lightgray' : ''
+            }}
+            onClick={() => onClick(state)}
+        >
             {children}
         </div>
     );

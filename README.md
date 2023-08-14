@@ -31,4 +31,18 @@ const Card: React.FC<CardProps> =
         ...
 }  
 ```
+## 2. Enum
+
+Для перечислений вариантов создается объект типа **enum** :
+```
+export enum CardVariant {
+    outlined = 'outlined',
+    primary = 'primary'
+}
+
+interface CardProps {
+    ...
+    variant: CardVariant;
+} 
+```
 ### Запуск проекта - `npm start`
