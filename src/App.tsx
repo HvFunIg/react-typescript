@@ -1,61 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import Card, { CardVariant } from './components/Card';
-import UserList from './components/UserList';
-import { ITodo, IUser } from './types/types';
 import axios from 'axios'
-import List from './components/List';
-import UserItem from './components/UserItem';
-import TodoItem from './components/TodoItem';
+import {BrowserRouter,Link,Routes,Route, useNavigate} from 'react-router-dom'
+import { ITodo, IUser } from './types/types';
+
+import Card, { CardVariant } from './components/Card';
 import EventsExample from './components/EventsExample';
+import UserPage from './components/UserPage';
+import TodosPage from './components/TodosPage';
+import UserItemPage from './components/UserItemPage';
+import TodoItemPage from './components/TodoItemPage';
+
 const App = () => {
-
-	const [users, setUsers] = useState<IUser[]>([]);
-	const [todos, setTodos] = useState<ITodo[]>([]);
-
-	useEffect(()=>{
-		fetchUsers();
-		fetchTodos();
-	},[])
-
-	async function fetchUsers(){
-		try {
-			const response = await axios.get<IUser[]>('https://jsonplaceholder.typicode.com/users')
-			setUsers(response.data)
-		} catch (error) {
-			alert(error)
-		}
-	}
-	
-	async function fetchTodos(){
-		try {
-			const response = await axios.get<ITodo[]>('https://jsonplaceholder.typicode.com/todos?_limit=10')
-			setTodos(response.data)
-		} catch (error) {
-			alert(error)
-		}
-	}
 return (
-	<div>
-		<EventsExample/>
-		<Card 
+	<BrowserRouter>
+		<div>
+			<Link to="/users">Пользователи</Link>
+			<Link to="/todos"> Список дел</Link>
+		</div>
+		<Routes>
+			{/* <EventsExample/>
+			<Card 
 			onClick={(num)=>alert("click!" + num)}
 			width='500px ' 
 			height='300px' 
-			variant={CardVariant.primary}
-		>
-			<button>B!</button>
-		</Card>
-		<UserList users={users}/>
-		<List 
-			items={users} 
-			renderItem={(user: IUser) => <UserItem user={user} key={user.id}/>}
-		/>
+				variant={CardVariant.primary}
+				>
+				<button>B!</button>
+			</Card> */}
+			<Route path={'/users'} element={<UserPage/> }></Route>
+			<Route path={'/user/:id'} element={<UserItemPage/> }></Route>
+			<Route path={'/todos'} element={<TodosPage/> }></Route>
+			<Route path={'/todo/:id'} element={<TodoItemPage/> }></Route>
+		</Routes>
+	</BrowserRouter>
 		
-		<List 
-			items={todos} 
-			renderItem={(todo: ITodo) => <TodoItem todo={todo} key={todo.id}/>}
-		/>
-			</div>
 );
 };
 
