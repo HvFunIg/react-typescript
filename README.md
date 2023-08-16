@@ -8,14 +8,14 @@
 
 ```
 interface CardProps {
-    width:string;
-    height?:string;
-    children?: React.ReactNode
+	width:string;
+	height?:string;
+	children?: React.ReactNode
 } 
 ```
 ```
 const Card = ({width, height}: CardProps) => { 
-    ...
+	...
 }
 ```
 
@@ -23,12 +23,12 @@ const Card = ({width, height}: CardProps) => {
 
 ```
 const Card: React.FC<CardProps> = 
-    ({
-        width, 
-        height, 
-        children
-    }) => {
-        ...
+	({
+		width, 
+		height, 
+		children
+	}) => {
+		...
 }  
 ```
 ## 2. Enum
@@ -36,25 +36,36 @@ const Card: React.FC<CardProps> =
 Для перечислений вариантов создается объект типа **enum** :
 ```
 export enum CardVariant {
-    outlined = 'outlined',
-    primary = 'primary'
+	outlined = 'outlined',
+	primary = 'primary'
 }
 
 interface CardProps {
-    ...
-    variant: CardVariant;
+	...
+	variant: CardVariant;
 } 
 ```
 
-## <T>
+## 3. <T>
 
-Здесь Т - просто свой тип. Так принято
+Здесь Т - просто свой тип (type). Так принято. Он передается в качестве параметра дженерика
 ```
 interface ListProps<T>{
-   ... 
+... 
+}
+
+const List: <T>(props: ListProps<T>) => React.ReactElement = props => {
+...
 }
 ```
+## 4. События
 
+Можно указывать, события какого типа нас интересуют
+```
+const changeHandler = (e: React.ChangeEvent) => {
+	...
+}
+```
 ### Комментарии
 Компоненты List и UserList - одно и то же, но написаны по-разному. Просто List нужен для более широкого использования и рендера любых компонентов.
 ### Запуск проекта - `npm start`
